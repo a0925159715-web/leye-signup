@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 樂業宮法會報名表</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500&display=swap');
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F5E6B8;
+    --red: #8B1A1A;
+    --red-light: #F9EEEE;
+    --bg: #FAF7F2;
+    --card: #FFFFFF;
+    --text: #2C1810;
+    --text-muted: #7A6555;
+    --border: #E8D9C0;
+    --green: #2D6A4F;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 120px;
+  }
+
+  header {
+    background: var(--red);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.03) 20px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+
+  header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    position: relative;
+  }
+
+  header .sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 6px;
+    position: relative;
+    letter-spacing: 1px;
+  }
+
+  header .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 12px auto 0;
+    position: relative;
+  }
+
+  .container { max-width: 560px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--gold);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .field { margin-bottom: 12px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .field input[type=text] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .field input[type=text]:focus {
+    border-color: var(--gold);
+    background: white;
+  }
+
+  .required { color: var(--red); margin-left: 2px; }
+
+  .item-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .item-row:last-of-type { border-bottom: none; }
+
+  .item-row input[type=checkbox] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .item-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .item-price {
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .item-free {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+  }
+
+  .item-detail {
+    display: none;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 4px 0 8px 30px;
+  }
+
+  .item-detail.show { display: block; }
+
+  .sub-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .sub-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .sub-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    background: white;
+    transition: all 0.15s;
+  }
+
+  .sub-check:has(input:checked) {
+    background: var(--red-light);
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .sub-check input { width: 13px; height: 13px; accent-color: var(--red); }
+
+  .detail-field { margin-bottom: 8px; }
+  .detail-field:last-child { margin-bottom: 0; }
+
+  .detail-field label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+
+  .detail-field input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text);
+    background: white;
+    outline: none;
+  }
+
+  .detail-field input:focus { border-color: var(--gold); }
+
+  .total-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 12px 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  }
+
+  .total-info { flex: 1; }
+
+  .total-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+
+  .total-items {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
+  .total-amount {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    white-space: nowrap;
+  }
+
+  .submit-btn {
+    padding: 10px 20px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Noto Sans TC', sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .submit-btn:hover { background: #6B1313; }
+
+  .notice {
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #7A5C1A;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .success-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .success-overlay.show { display: flex; }
+
+  .success-box {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    max-width: 300px;
+    margin: 1rem;
+  }
+
+  .success-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .success-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .success-msg {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .success-btn {
+    margin-top: 1rem;
+    padding: 8px 24px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>樂業宮</h1>
+  <p class="sub">2026 法會報名表</p>
+  <div class="divider"></div>
+</header>
+
+<div class="container">
+
+  <div class="notice">請填寫基本資料並勾選要報名的項目，金額將自動計算</div>
+
+  <div class="card">
+    <div class="card-title">基本資料</div>
+    <div class="field">
+      <label>聯絡人姓名 <span class="required">*</span></label>
+      <input type="text" id="contact_name" placeholder="請輸入姓名">
+    </div>
+    <div class="field">
+      <label>聯絡電話</label>
+      <input type="text" id="contact_phone" placeholder="請輸入電話">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">報名項目</div>
+
+    <!-- 三寶司 -->
+    <div class="item-row" onclick="toggleItem('sanbao')">
+      <input type="checkbox" id="cb_sanbao" onclick="event.stopPropagation(); toggleItem('sanbao')">
+      <span class="item-name">三寶司</span>
+      <span class="item-price">$1,500</span>
+    </div>
+    <div class="item-detail" id="detail_sanbao">
+      <div class="sub-label">選擇項目（可複選）</div>
+      <div class="sub-checks">
+        <label class="sub-check"><input type="checkbox"> 歷代祖先</label>
+        <label class="sub-check"><input type="checkbox"> 地靈公婆</label>
+        <label class="sub-check"><input type="checkbox"> 牌位</label>
+        <label class="sub-check"><input type="checkbox"> 嬰靈</label>
+      </div>
+      <div class="detail-field"><label>陽上姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入陽上姓名"></div>
+      <div class="detail-field"><label>現居地址</label><input type="text" placeholder="請輸入現居地址"></div>
+      <div class="detail-field"><label>超度地址</label><input type="text" placeholder="請輸入超度地址"></div>
+    </div>
+
+    <!-- 正魂牌位 -->
+    <div class="item-row" onclick="toggleItem('zhenhun')">
+      <input type="checkbox" id="cb_zhenhun" onclick="event.stopPropagation(); toggleItem('zhenhun')">
+      <span class="item-name">正魂牌位</span>
+      <span class="item-price">$1,500</span>
+    </div>
+    <div class="item-detail" id="detail_zhenhun">
+      <div class="detail-field"><label>陽上姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入陽上姓名"></div>
+    </div>
+
+    <!-- 嬰靈牌位 -->
+    <div class="item-row" onclick="toggleItem('yingling')">
+      <input type="checkbox" id="cb_yingling" onclick="event.stopPropagation(); toggleItem('yingling')">
+      <span class="item-name">嬰靈牌位</span>
+      <span class="item-price">$1,500</span>
+    </div>
+    <div class="item-detail" id="detail_yingling">
+      <div class="detail-field"><label>陽上姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入陽上姓名"></div>
+    </div>
+
+    <!-- 地靈公婆 -->
+    <div class="item-row" onclick="toggleItem('diling')">
+      <input type="checkbox" id="cb_diling" onclick="event.stopPropagation(); toggleItem('diling')">
+      <span class="item-name">地靈公婆</span>
+      <span class="item-price">$1,500</span>
+    </div>
+    <div class="item-detail" id="detail_diling">
+      <div class="detail-field"><label>陽上姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入陽上姓名"></div>
+    </div>
+
+    <!-- 歷代祖先 -->
+    <div class="item-row" onclick="toggleItem('zuzu')">
+      <input type="checkbox" id="cb_zuzu" onclick="event.stopPropagation(); toggleItem('zuzu')">
+      <span class="item-name">歷代祖先</span>
+      <span class="item-price">$1,500</span>
+    </div>
+    <div class="item-detail" id="detail_zuzu">
+      <div class="detail-field"><label>超度姓氏 <span class="required">*</span></label><input type="text" placeholder="例：陳、林、王"></div>
+      <div class="detail-field"><label>陽上姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入陽上姓名"></div>
+    </div>
+
+    <!-- 疏文 -->
+    <div class="item-row" onclick="toggleItem('suwen')">
+      <input type="checkbox" id="cb_suwen" onclick="event.stopPropagation(); toggleItem('suwen')">
+      <span class="item-name">疏文</span>
+      <span class="item-free">免費</span>
+    </div>
+    <div class="item-detail" id="detail_suwen">
+      <div class="detail-field"><label>陽上姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入陽上姓名"></div>
+    </div>
+
+    <!-- 金紙封條 -->
+    <div class="item-row" onclick="toggleItem('jinfeng')">
+      <input type="checkbox" id="cb_jinfeng" onclick="event.stopPropagation(); toggleItem('jinfeng')">
+      <span class="item-name">金紙封條</span>
+      <span class="item-free">免費</span>
+    </div>
+    <div class="item-detail" id="detail_jinfeng">
+      <div class="detail-field"><label>姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入姓名"></div>
+    </div>
+
+    <!-- 普渡供桌 -->
+    <div class="item-row" onclick="toggleItem('pudu')">
+      <input type="checkbox" id="cb_pudu" onclick="event.stopPropagation(); toggleItem('pudu')">
+      <span class="item-name">普渡供桌</span>
+      <span class="item-price">$1,500</span>
+    </div>
+    <div class="item-detail" id="detail_pudu">
+      <div class="detail-field"><label>姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入姓名"></div>
+    </div>
+
+    <!-- 米包 -->
+    <div class="item-row" onclick="toggleItem('mibao')">
+      <input type="checkbox" id="cb_mibao" onclick="event.stopPropagation(); toggleItem('mibao')">
+      <span class="item-name">米包</span>
+      <span class="item-price">$500</span>
+    </div>
+    <div class="item-detail" id="detail_mibao">
+      <div class="detail-field"><label>姓名 <span class="required">*</span></label><input type="text" placeholder="請輸入姓名"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="total-bar">
+  <div class="total-info">
+    <div class="total-label">應繳金額</div>
+    <div class="total-items" id="total-items">尚未勾選任何項目</div>
+  </div>
+  <div class="total-amount" id="total-amount">$0</div>
+  <button class="submit-btn" onclick="submitForm()">送出報名</button>
+</div>
+
+<div class="success-overlay" id="success-overlay">
+  <div class="success-box">
+    <div class="success-icon">🙏</div>
+    <div class="success-title">報名成功</div>
+    <div class="success-msg">感謝您的報名，我們已收到您的資料，請依指示完成繳費。</div>
+    <button class="success-btn" onclick="closeSuccess()">確認</button>
+  </div>
+</div>
+
+<script>
+const prices = {sanbao:1500,zhenhun:1500,yingling:1500,diling:1500,zuzu:1500,suwen:0,jinfeng:0,pudu:1500,mibao:500};
+const names = {sanbao:'三寶司',zhenhun:'正魂牌位',yingling:'嬰靈牌位',diling:'地靈公婆',zuzu:'歷代祖先',suwen:'疏文',jinfeng:'金紙封條',pudu:'普渡供桌',mibao:'米包'};
+
+function toggleItem(id) {
+  const cb = document.getElementById('cb_'+id);
+  const detail = document.getElementById('detail_'+id);
+  cb.checked = !cb.checked;
+  detail.classList.toggle('show', cb.checked);
+  calcTotal();
+}
+
+function calcTotal() {
+  let total = 0;
+  let items = [];
+  Object.keys(prices).forEach(id => {
+    const cb = document.getElementById('cb_'+id);
+    if (cb && cb.checked) {
+      total += prices[id];
+      items.push(names[id]);
+    }
+  });
+  document.getElementById('total-amount').textContent = '$' + total.toLocaleString();
+  document.getElementById('total-items').textContent = items.length > 0 ? items.join('、') : '尚未勾選任何項目';
+}
+
+function submitForm() {
+  const name = document.getElementById('contact_name').value.trim();
+  if (!name) { alert('請填寫聯絡人姓名'); return; }
+  const checked = Object.keys(prices).some(id => document.getElementById('cb_'+id).checked);
+  if (!checked) { alert('請至少勾選一個報名項目'); return; }
+  document.getElementById('success-overlay').classList.add('show');
+}
+
+function closeSuccess() {
+  document.getElementById('success-overlay').classList.remove('show');
+}
+</script>
+</body>
+</html>
